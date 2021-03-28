@@ -26,7 +26,7 @@ class Fragment2 : Fragment() {
     override fun onStart() {
         super.onStart()
         user = Fragment2Args.fromBundle(requireArguments()).user
-        var message = "bienvenido: " + user.email + " !"
+        var message = "Bienvenido: " + user.name + " " + user.lastName + " !"
         Snackbar.make(v,message,Snackbar.LENGTH_SHORT).show()
     }
 }

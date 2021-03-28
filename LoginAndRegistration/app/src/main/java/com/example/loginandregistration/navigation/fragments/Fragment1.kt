@@ -1,5 +1,6 @@
 package com.example.loginandregistration.navigation.fragments
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,7 +26,8 @@ class Fragment1 : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_1, container, false)
-        btnLogin = v.findViewById(R.id.button)
+        btnLogin = v.findViewById(R.id.btn_login)
+        btnRegistrar = v.findViewById(R.id.btn_signin)
         userName = v.findViewById(R.id.userName)
         passWord = v.findViewById(R.id.passWord)
         return v
@@ -34,26 +36,34 @@ class Fragment1 : Fragment() {
     override fun onStart() {
         super.onStart()
         btnLogin.setOnClickListener {
-            val user = User(userName.text.toString(), passWord.text.toString())
-            val existe = verificarSiElUsuarioExiste(user)
-            if (existe){
-                //Redireccionar a siguiente fragment
+            val user = verificarSiElUsuarioExiste(userName.text.toString(), passWord.text.toString())
+            if (user != null){
                 redirectToAction2(user)
-            } else {
-                Snackbar.make(v,"Credenciales Incorrectas", Snackbar.LENGTH_SHORT).show()
             }
+        }
+        btnRegistrar.setOnClickListener {
+            redirectToAction3()
         }
     }
 
-    private fun verificarSiElUsuarioExiste(user: User): Boolean {
-        val existe = userService.findUserByUsernameAndPassword(user.email, user.password)
-        return existe
+    private fun verificarSiElUsuarioExiste(email: String, password: String): User? {
+        try {
+            val user = userService.findUserByUsernameAndPassword(email, password)
+            return user
+        }catch (e: Resources.NotFoundException) {
+            Snackbar.make(v,"Credenciales Incorrectas", Snackbar.LENGTH_SHORT).show()
+        }
+        return null
     }
 
     private fun redirectToAction2(user: User){
-        // Preguntar como sabe que es el 2
         val action2 = Fragment1Directions.actionFragment1ToFragment2(user)
         v.findNavController().navigate(action2)
+    }
+
+    private fun redirectToAction3(){
+        val action3 = Fragment1Directions.actionFragment1ToFragment3()
+        v.findNavController().navigate(action3)
     }
 
 }

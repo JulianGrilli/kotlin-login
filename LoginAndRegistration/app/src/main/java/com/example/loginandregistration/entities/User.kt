@@ -3,17 +3,23 @@ package com.example.loginandregistration.entities
 import android.os.Parcel
 import android.os.Parcelable
 
-class User(email: String, password: String): Parcelable {
+class User(email: String, password: String, name: String, lastName: String): Parcelable {
 
     var email: String
     var password: String
+    var name: String
+    var lastName: String
 
     init {
         this.email = email
         this.password = password
+        this.name = name
+        this.lastName = lastName
     }
 
     constructor(source: Parcel) : this(
+        source.readString()!!,
+        source.readString()!!,
         source.readString()!!,
         source.readString()!!
     )
@@ -23,6 +29,8 @@ class User(email: String, password: String): Parcelable {
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(email)
         writeString(password)
+        writeString(name)
+        writeString(lastName)
     }
 
     companion object {

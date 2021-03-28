@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_fragment1_to_fragment2"
             app:destination="@id/fragment2" />
+        <action
+            android:id="@+id/action_fragment1_to_fragment3"
+            app:destination="@id/fragment3" />
     </fragment>
     <fragment
         android:id="@+id/fragment2"
@@ -22,5 +25,14 @@
     <argument
         android:name="user"
         app:argType="com.example.loginandregistration.entities.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment3"
+        android:name="com.example.loginandregistration.navigation.fragments.Fragment3"
+        android:label="fragment_3"
+        tools:layout="@layout/fragment_3" >
+        <action
+            android:id="@+id/action_fragment3_to_fragment12"
+            app:destination="@id/fragment1" />
     </fragment>
 </navigation>
